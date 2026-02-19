@@ -1,0 +1,97 @@
+.container {
+  display: grid;
+  gap: 10px;
+  border: 2px solid black;
+  grid-template-columns: 2fr 1fr;
+}
+
+.world-box {
+  border: 2px solid black;
+  display: grid;
+  gap: 2px;
+  grid-template-columns: repeat(4, 1fr);
+  background-color: red;
+  height: 440px;
+  margin-bottom: 10px;
+}
+.step-box {
+  background-color: #fff;
+}
+
+.text-box {
+  border: 2px solid black;
+  display: grid;
+  gap: 5px;
+  grid-template-rows: 1fr 4fr;
+  background-color: blue;
+  height: 440px;
+  margin-bottom: 10px;
+}
+.text-box1 {
+  background-color: aqua;
+}
+.text-box2 {
+  background-color: beige;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.score-box {
+  background-color: green;
+  height: 150px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+.control-box {
+  display: grid;
+  grid-template-areas: "zone1 zone2";
+  gap: 10px;
+  background-color: yellow;
+  height: 150px;
+}
+.cb1 {
+  background-color: gold;
+  grid-area: zone1;
+  display: grid;
+  grid-template-areas:
+    "head1 up head2"
+    "left mid right"
+    "foot1 down foot2";
+}
+.cb2 {
+  background-color: gold;
+  grid-area: zone2;
+  display: grid;
+  grid-template-areas:
+    "head1 up head2"
+    "left mid right"
+    "foot1 down foot2";
+}
+.control-button {
+  background-color: violet;
+}
+.up {
+  grid-area: up;
+}
+.down {
+  grid-area: down;
+}
+.left {
+  grid-area: left;
+}
+.right {
+  grid-area: right;
+}
+.maroon {
+  background-color: maroon;
+}
+.hide {
+  display: none;
+}
+.instruction:hover {
+  cursor: pointer;
+}
+
+.win {
+  color: black;
+}

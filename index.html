@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wumpus World</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <h1>THE WUMPUS WORLD</h1>
+    <div class="container">
+      <div class="box1">
+        <div class="box world-box">
+          <div class="step-box maroon" id="step1"></div>
+          <div class="step-box" id="breeze-stench"></div>
+          <div class="step-box" id="wumpus">
+            <span class="hide">Wumpus</span>
+          </div>
+          <div class="step-box" id="stench"></div>
+          <div class="step-box" id="breeze"></div>
+          <div class="step-box" id="pit1"><span class="hide">Pit</span></div>
+          <div class="step-box" id="breeze"></div>
+          <div class="step-box" id="noalert"></div>
+          <div class="step-box" id="breeze"></div>
+          <div class="step-box" id="breeze"></div>
+          <div class="step-box" id="pit2"><span class="hide">Pit</span></div>
+          <div class="step-box" id="breeze"></div>
+          <div class="step-box" id="pit3"><span class="hide">Pit</span></div>
+          <div class="step-box" id="breeze"></div>
+          <div class="step-box" id="gold"><span class="hide">Gold</span></div>
+          <div class="step-box" id="noalert"></div>
+        </div>
+        <div class="box score-box">
+          <div class="attempts">
+            <div>Attempts</div>
+            <div>0</div>
+          </div>
+          <div class="score">
+            <div>Score</div>
+            <div>0</div>
+          </div>
+          <div class="highScore">
+            <div>HighScore</div>
+            <div>0</div>
+          </div>
+        </div>
+      </div>
+      <div class="box2">
+        <div class="box text-box">
+          <div class="text-box1 alert-box">Alert Box</div>
+          <div class="text-box2 instruction-box">
+            <div class="instruction" type="button">
+              Read Instructions:
+              <span class="hide" id="details"
+                ><br /><br /><b>Movement:</b> Travel is restricted to
+                orthogonally adjacent rooms (Up, Down, Left, Right). <br />
+                <b>Sensory Alerts:</b> You receive status alerts based only on
+                orthogonally adjacent rooms: <br />
+                <b>Stench:</b> Indicates the Wumpus is in a neighboring room.
+                <br />
+                <b>Breeze:</b> Indicates a Pit is in a neighboring room. <br />
+                <b>Glitter:</b> Perceived only when you are in the same room as
+                the gold. <br />
+                <b>Hazards:</b> <br />Entering a room with a live Wumpus or a
+                Pit results in an immediate loss. <br />
+                <b>Objective:</b> Retrieve the gold and return to the starting
+                room.</span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="box control-box">
+          <div class="cb1">
+            <div class="control-button up" type="button">Up</div>
+            <div class="control-button left" type="button">Left</div>
+            <div class="control-button right" type="button">Right</div>
+            <div class="control-button down" type="button">Down</div>
+          </div>
+          <div class="cb2">
+            <div class="control-button up" type="button">Up</div>
+            <div class="control-button left" type="button">Left</div>
+            <div class="control-button right" type="button">Right</div>
+            <div class="control-button down" type="button">Down</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container2 hide">
+      <div class="declarationBox">GAME OVER</div>
+      <button class="restartBtn">Restart</button>
+    </div>
+  </body>
+  <script src="app.js"></script>
+</html>
