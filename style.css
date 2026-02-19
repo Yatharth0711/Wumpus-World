@@ -76,6 +76,9 @@
 .down {
   grid-area: down;
 }
+.mid{
+    grid-area: mid;
+}
 .left {
   grid-area: left;
 }
@@ -94,4 +97,14 @@
 
 .win {
   color: black;
+}
+
+.mid{
+    background-color: brown;
+    color: #fff;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
 }

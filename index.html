@@ -14,9 +14,7 @@
         <div class="box world-box">
           <div class="step-box maroon" id="step1"></div>
           <div class="step-box" id="breeze-stench"></div>
-          <div class="step-box" id="wumpus">
-            <span class="hide">Wumpus</span>
-          </div>
+          <div class="step-box" id="wumpus"><span class="hide wumpus">Wumpus</span></div>
           <div class="step-box" id="stench"></div>
           <div class="step-box" id="breeze"></div>
           <div class="step-box" id="pit1"><span class="hide">Pit</span></div>
@@ -74,20 +72,22 @@
           <div class="cb1">
             <div class="control-button up" type="button">Up</div>
             <div class="control-button left" type="button">Left</div>
+            <div  class="control-button mid" >Move</div>
             <div class="control-button right" type="button">Right</div>
             <div class="control-button down" type="button">Down</div>
           </div>
           <div class="cb2">
-            <div class="control-button up" type="button">Up</div>
-            <div class="control-button left" type="button">Left</div>
-            <div class="control-button right" type="button">Right</div>
-            <div class="control-button down" type="button">Down</div>
+            <div class="control-button shootBtn up" type="button">Up</div>
+            <div class="control-button shootBtn left" type="button">Left</div>
+            <div  class="control-button mid" >Shoot</div>
+            <div class="control-button shootBtn right" type="button">Right</div>
+            <div class="control-button shootBtn down" type="button">Down</div>
           </div>
         </div>
       </div>
     </div>
     <div class="container2 hide">
-      <div class="declarationBox">GAME OVER</div>
+      <div class="declarationBox"></div>
       <button class="restartBtn">Restart</button>
     </div>
   </body>
