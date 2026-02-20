@@ -11,23 +11,22 @@ function gameOver(currLocation) {
   container1.classList.add("hide");
   container2.classList.remove("hide");
   locationTracker = 0;
-  declarationBox.textContent= "Game Over";
+  declarationBox.textContent = "Game Over";
   const currentStepBox = worldBox.children[currLocation];
   currentStepBox.classList.remove("maroon");
   firstStepBox.classList.add("maroon");
 }
 function gameWon() {
   declarationBox.textContent = "You won the game.";
-  
+
   container1.classList.add("hide");
-  
+
   container2.classList.remove("hide");
   locationTracker = 0;
- 
 }
 restartBtn.addEventListener("click", restart);
 function restart() {
-  arrowCount=1;
+  arrowCount = 1;
   alertBox.textContent = "Alert Box";
   container1.classList.remove("hide");
   container2.classList.add("hide");
@@ -38,8 +37,6 @@ function restart() {
     firstStepBox.classList.remove("win");
   }
 }
-
-
 
 function sendAlert(currLocation) {
   if (
@@ -243,3 +240,95 @@ for (const shootBtn of shootBtns) {
   });
 }
 
+window.addEventListener("keydown", (event) => {
+  console.log(event)
+  if (event.ctrlKey) {
+    shoot(event.key);
+  } else {
+    switch (event.key) {
+      case "ArrowUp":
+        let location1 = document.querySelector(".maroon");
+        if ([0, 1, 2, 3].includes(locationTracker)) {
+          console.log(locationTracker);
+          console.log("bump");
+        } else {
+          up(location1);
+        }
+        break;
+      case "ArrowDown":
+        let location2 = document.querySelector(".maroon");
+        if ([12, 13, 14, 15].includes(locationTracker)) {
+          console.log(locationTracker);
+          console.log("bump");
+        } else {
+          down(location2);
+        }
+        break;
+      case "ArrowRight":
+        let location3 = document.querySelector(".maroon");
+        if ([3, 7, 11, 15].includes(locationTracker)) {
+          console.log(locationTracker);
+          console.log("bump");
+        } else {
+          right(location3);
+        }
+        break;
+      case "ArrowLeft":
+        let location4 = document.querySelector(".maroon");
+        if ([0, 4, 8, 12].includes(locationTracker)) {
+          console.log(locationTracker);
+          console.log("bump");
+        } else {
+          left(location4);
+        }
+        break;
+
+      default:
+        console.log("You pressed and unwanted key");
+        break;
+    }
+  }
+});
+
+function shoot(key) {
+  if (arrowCount == 0) {
+    alertMsg = "No arrow left";
+    alertBox.textContent += alertMsg;
+    return;
+  }
+  let target;
+  if (key === "ArrowLeft") {
+    if (locationTracker % 4 !== 0)
+      target = worldBox.children[locationTracker - 1];
+  } else if (key === "ArrowRight") {
+    console.log("right shoot");
+    if (locationTracker % 4 !== 3) {
+      console.log("target:", worldBox.children[locationTracker + 1]);
+      target = worldBox.children[locationTracker + 1];
+    }
+  } else if (key === "ArrowUp") {
+    let targetIdx = locationTracker - 4;
+    if (targetIdx > 0) target = worldBox.children[targetIdx];
+  } else if (key === "ArrowDown") {
+    let targetIdx = locationTracker + 4;
+    if (targetIdx < 16) target = worldBox.children[targetIdx];
+  } else {
+    console.log("You pressed an unwanted key");
+    return;
+  }
+
+  if (!target) {
+    alertBox.textContent += " GAAND KE ANDHE!!!";
+    arrowCount--;
+    return;
+  }
+  const isWumpus = target?.textContent.includes("Wumpus");
+  if (isWumpus) {
+    const wumpus = document.querySelector(".wumpus");
+    wumpus.textContent = "";
+    alertBox.textContent += " You killed the Wumpus.";
+  } else {
+    alertBox.textContent += " You missed the chance.";
+  }
+  arrowCount--;
+}
