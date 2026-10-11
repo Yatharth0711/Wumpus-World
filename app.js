@@ -46,6 +46,8 @@ function gameWon() {
 
   container2.classList.remove("hide");
   locationTracker = 0;
+  attempt++;
+  attemptBox.textContent = `${attempt}`;
   gameOver_gameWon = true;
   if (score > highscore) {
     highscore = score;

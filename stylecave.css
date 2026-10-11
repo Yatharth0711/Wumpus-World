@@ -1,0 +1,423 @@
+@import url("https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@400;500;700&family=Pirata+One&display=swap");
+
+/* ---------- Tokens: a torch-lit cave ---------- */
+:root {
+  --cave: #14161c;
+  --cave-2: #1d2029;
+  --rock: #2a2e3a;
+  --rock-2: #373c4b;
+  --bone: #ebe5d3;
+  --muted: #a39f92;
+  --torch: #e8a33d;
+  --moss: #4f8a6a;
+  --moss-dark: #356a4e;
+  --ember: #c8553d;
+  --ember-dark: #9e3e2b;
+  --player: #8f2d3a;
+  --radius: 12px;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 12px;
+  min-height: 100vh;
+  background: radial-gradient(circle at 50% -10%, #2b2f3d 0%, var(--cave) 60%);
+  color: var(--bone);
+  font-family: "Alegreya Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 17px;
+  line-height: 1.4;
+}
+
+h1 {
+  margin: 4px 0 14px;
+  text-align: center;
+  font-family: "Pirata One", Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(1.9rem, 7vw, 3rem);
+  letter-spacing: 0.06em;
+  color: var(--torch);
+  text-shadow: 0 2px 14px rgba(232, 163, 61, 0.35);
+}
+
+/* ---------- Layout ---------- */
+.container {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 3fr 2fr;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 16px;
+  background: var(--cave-2);
+  border: 2px solid var(--rock-2);
+  border-radius: 18px;
+}
+
+.box1,
+.box2 {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.box {
+  border-radius: var(--radius);
+}
+
+/* ---------- World grid ---------- */
+.world-box {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  padding: 4px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-color: var(--rock-2);
+  border: 2px solid var(--rock-2);
+}
+
+.step-box {
+  background-color: var(--rock);
+  border-radius: 8px;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* player position */
+.step-box.maroon,
+.maroon {
+  background-color: var(--player);
+  box-shadow: inset 0 0 0 3px var(--torch);
+}
+
+/* start room glows once the gold has been grabbed */
+.win {
+  color: var(--bone);
+  outline: 3px solid var(--torch);
+  outline-offset: -3px;
+}
+
+/* ---------- Score ---------- */
+.score-box {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  padding: 10px 6px;
+  background-color: var(--moss-dark);
+  border: 2px solid var(--moss);
+  text-align: center;
+}
+
+.attempt,
+.score,
+.highscore {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.attempt > div:first-child,
+.score > div:first-child,
+.highscore > div:first-child {
+  font-size: 0.85rem;
+  color: #cfe5d8;
+}
+
+#attempt,
+#score,
+#highscore {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Alert + instructions ---------- */
+.text-box {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 8px;
+  flex: 1;
+  min-height: 220px;
+  padding: 8px;
+  background-color: var(--rock);
+  border: 2px solid var(--rock-2);
+}
+
+.text-box1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 64px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background-color: #0f1117;
+  border: 1px solid var(--torch);
+  color: var(--torch);
+  font-size: 1.15rem;
+  font-weight: 700;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.text-box2 {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background-color: #231f1a;
+  color: var(--bone);
+  font-size: 0.95rem;
+  overflow-y: auto;
+  max-height: 340px;
+}
+
+.instruction {
+  width: 100%;
+}
+
+.instruction:hover {
+  cursor: pointer;
+  color: var(--torch);
+}
+
+/* ---------- Controls ---------- */
+.control-box {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 10px;
+  background-color: var(--rock);
+  border: 2px solid var(--rock-2);
+}
+
+.cb1,
+.cb2 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, minmax(48px, 1fr));
+  gap: 6px;
+  padding: 6px;
+  border-radius: 10px;
+}
+
+.cb1 {
+  background-color: rgba(79, 138, 106, 0.18);
+}
+
+.cb2 {
+  background-color: rgba(200, 85, 61, 0.18);
+}
+
+.control-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 48px;
+  border-radius: 10px;
+  font-weight: 700;
+  color: #fff;
+  background-color: var(--moss);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  cursor: pointer;
+  transition: transform 0.08s ease, background-color 0.15s ease;
+}
+
+.cb2 .control-button {
+  background-color: var(--ember);
+}
+
+.control-button:hover {
+  filter: brightness(1.1);
+}
+
+.control-button:active {
+  transform: scale(0.94);
+  background-color: var(--moss-dark);
+}
+
+.cb2 .control-button:active {
+  background-color: var(--ember-dark);
+}
+
+/* Centre labels ("Move" / "Shoot") are not buttons */
+.mid,
+.mid:hover,
+.mid:active {
+  background-color: transparent;
+  color: var(--bone);
+  font-weight: 700;
+  cursor: default;
+  transform: none;
+  filter: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.up {
+  grid-area: up;
+}
+.down {
+  grid-area: down;
+}
+.left {
+  grid-area: left;
+}
+.right {
+  grid-area: right;
+}
+.mid {
+  grid-area: mid;
+}
+
+.cb1,
+.cb2 {
+  grid-template-areas:
+    "head1 up head2"
+    "left mid right"
+    "foot1 down foot2";
+}
+
+/* ---------- Game over / won screen ---------- */
+.container2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  max-width: 520px;
+  margin: 24px auto;
+  padding: 28px 20px;
+  text-align: center;
+  background: var(--cave-2);
+  border: 2px solid var(--torch);
+  border-radius: 18px;
+}
+
+.declarationBox {
+  font-family: "Pirata One", Georgia, serif;
+  font-size: 1.5rem;
+  line-height: 1.35;
+  color: var(--torch);
+}
+
+.restartBtn {
+  min-height: 52px;
+  padding: 12px 36px;
+  border: none;
+  border-radius: 12px;
+  background: var(--moss);
+  color: #fff;
+  font-family: inherit;
+  font-size: 1.15rem;
+  font-weight: 700;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.restartBtn:active {
+  background: var(--moss-dark);
+  transform: scale(0.97);
+}
+
+/* ---------- Keyboard focus ---------- */
+.restartBtn:focus-visible {
+  outline: 3px solid var(--torch);
+  outline-offset: 3px;
+}
+
+/* ---------- Utility (keep last so it always wins) ---------- */
+.hide {
+  display: none !important;
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 760px) {
+  body {
+    padding: 8px;
+    font-size: 16px;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 14px;
+  }
+
+  /* Let the world, score, text and controls reorder as one column */
+  .box1,
+  .box2 {
+    display: contents;
+  }
+
+  .world-box {
+    order: 1;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  .score-box {
+    order: 2;
+  }
+
+  .text-box {
+    order: 3;
+    flex: none;
+    min-height: 0;
+  }
+
+  .control-box {
+    order: 4;
+    /* keep the controls reachable by thumb while scrolling */
+    position: sticky;
+    bottom: 8px;
+    z-index: 5;
+    box-shadow: 0 -6px 18px rgba(0, 0, 0, 0.45);
+  }
+
+  .text-box2 {
+    max-height: 260px;
+  }
+
+  .container2 {
+    margin: 16px auto;
+    padding: 22px 14px;
+  }
+}
+
+@media (max-width: 380px) {
+  .control-box {
+    gap: 6px;
+    padding: 6px;
+  }
+  .cb1,
+  .cb2 {
+    gap: 4px;
+    padding: 4px;
+    grid-template-rows: repeat(3, minmax(44px, 1fr));
+  }
+  #attempt,
+  #score,
+  #highscore {
+    font-size: 1.35rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
