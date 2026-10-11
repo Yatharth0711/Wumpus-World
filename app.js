@@ -6,23 +6,51 @@ const restartBtn = document.querySelector(".restartBtn");
 const declarationBox = document.querySelector(".declarationBox");
 const firstStepBox = document.querySelector(`#step1`);
 const alertBox = document.querySelector(".alert-box");
+let attempts = 0;
+const worldBox = document.querySelector(".world-box");
+let attempt = 1;
+let score = 0;
+let highscore = 0;
+let attemptBox = document.querySelector("#attempt");
+let scoreBox = document.querySelector("#score");
+let highscoreBox = document.querySelector("#highscore");
+scoreBox.textContent = `${score}`;
+if (score > highscore) {
+  highscore = score;
+}
+highscoreBox.textContent = `${highscore}`;
+let gameOver_gameWon = false;
 
 function gameOver(currLocation) {
   container1.classList.add("hide");
   container2.classList.remove("hide");
   locationTracker = 0;
-  declarationBox.textContent = "Game Over";
+  declarationBox.textContent = `Game Over! your current score is ${score} and your highest score is ${highscore}`;
   const currentStepBox = worldBox.children[currLocation];
   currentStepBox.classList.remove("maroon");
   firstStepBox.classList.add("maroon");
+  attempt++;
+  attemptBox.textContent = `${attempt}`;
+  gameOver_gameWon = true;
+  score -= 100;
+  scoreBox.textContent = `${score}`;
+  if (score > highscore) {
+    highscore = score;
+  }
+  highscoreBox.textContent = `${highscore}`;
 }
 function gameWon() {
-  declarationBox.textContent = "You won the game.";
+  declarationBox.textContent = `Game Won! your current score is ${score} and your highest score is ${highscore} `;
 
   container1.classList.add("hide");
 
   container2.classList.remove("hide");
   locationTracker = 0;
+  gameOver_gameWon = true;
+  if (score > highscore) {
+    highscore = score;
+  }
+  highscoreBox.textContent = `${highscore}`;
 }
 restartBtn.addEventListener("click", restart);
 function restart() {
@@ -36,6 +64,9 @@ function restart() {
   if (firstStepBox.classList.contains("win")) {
     firstStepBox.classList.remove("win");
   }
+  gameOver_gameWon = false;
+  score = 0;
+  scoreBox.textContent = `${score}`;
 }
 
 function sendAlert(currLocation) {
@@ -49,6 +80,8 @@ function sendAlert(currLocation) {
   let isGold = worldBox.children[currLocation].textContent.includes("Gold");
   if (isGold) {
     alertMsg = "GRABBED THE GOLD, RETURN TO START";
+    score += 200;
+    scoreBox.textContent = `${score}`;
     if (!firstStepBox.classList.contains("win")) {
       firstStepBox.classList.add("win");
     }
@@ -95,6 +128,12 @@ function right(btn) {
   locationTracker++;
   console.log(locationTracker);
   sendAlert(locationTracker);
+  score -= 10;
+  scoreBox.textContent = `${score}`;
+  if (score > highscore) {
+    highscore = score;
+  }
+  highscoreBox.textContent = `${highscore}`;
 }
 
 function left(btn) {
@@ -110,6 +149,12 @@ function left(btn) {
     }
   }
   sendAlert(locationTracker);
+  score -= 10;
+  scoreBox.textContent = `${score}`;
+  if (score > highscore) {
+    highscore = score;
+  }
+  highscoreBox.textContent = `${highscore}`;
 }
 function down(btn) {
   console.dir(btn);
@@ -122,6 +167,12 @@ function down(btn) {
   const btnId = worldBox.children[index].getAttribute("id");
   console.log(btnId);
   sendAlert(locationTracker);
+  score -= 10;
+  scoreBox.textContent = `${score}`;
+  if (score > highscore) {
+    highscore = score;
+  }
+  highscoreBox.textContent = `${highscore}`;
 }
 function up(btn) {
   console.dir(btn);
@@ -140,9 +191,13 @@ function up(btn) {
   const btnId = worldBox.children[index].getAttribute("id");
   console.log(btnId);
   sendAlert(locationTracker);
+  score -= 10;
+  scoreBox.textContent = `${score}`;
+  if (score > highscore) {
+    highscore = score;
+  }
+  highscoreBox.textContent = `${highscore}`;
 }
-
-const worldBox = document.querySelector(".world-box");
 
 const rightBtn = document.querySelector(".right");
 rightBtn.addEventListener("click", () => {
@@ -226,6 +281,12 @@ for (const shootBtn of shootBtns) {
     if (!target) {
       alertBox.textContent += " GAAND KE ANDHE!!!";
       arrowCount--;
+      score -= 50;
+      scoreBox.textContent = `${score}`;
+      if (score > highscore) {
+        highscore = score;
+      }
+      highscoreBox.textContent = `${highscore}`;
       return;
     }
     const isWumpus = target?.textContent.includes("Wumpus");
@@ -233,17 +294,33 @@ for (const shootBtn of shootBtns) {
       const wumpus = document.querySelector(".wumpus");
       wumpus.textContent = "";
       alertBox.textContent += " You killed the Wumpus.";
+      arrowCount--;
+      score -= 50;
+      score += 500;
+      scoreBox.textContent = `${score}`;
+      if (score > highscore) {
+        highscore = score;
+      }
+      highscoreBox.textContent = `${highscore}`;
     } else {
       alertBox.textContent += " You missed the chance.";
+      arrowCount--;
+      score -= 50;
+      scoreBox.textContent = `${score}`;
+      if (score > highscore) {
+        highscore = score;
+      }
+      highscoreBox.textContent = `${highscore}`;
     }
-    arrowCount--;
   });
 }
 
 window.addEventListener("keydown", (event) => {
-  console.log(event)
+  console.log(event);
   if (event.ctrlKey) {
     shoot(event.key);
+  } else if (event.key === "Enter" && gameOver_gameWon) {
+    restart();
   } else {
     switch (event.key) {
       case "ArrowUp":
@@ -320,6 +397,12 @@ function shoot(key) {
   if (!target) {
     alertBox.textContent += " GAAND KE ANDHE!!!";
     arrowCount--;
+    score -= 50;
+    scoreBox.textContent = `${score}`;
+    if (score > highscore) {
+      highscore = score;
+    }
+    highscoreBox.textContent = `${highscore}`;
     return;
   }
   const isWumpus = target?.textContent.includes("Wumpus");
@@ -327,8 +410,22 @@ function shoot(key) {
     const wumpus = document.querySelector(".wumpus");
     wumpus.textContent = "";
     alertBox.textContent += " You killed the Wumpus.";
+    arrowCount--;
+    score -= 50;
+    score += 500;
+    scoreBox.textContent = `${score}`;
+    if (score > highscore) {
+      highscore = score;
+    }
+    highscoreBox.textContent = `${highscore}`;
   } else {
     alertBox.textContent += " You missed the chance.";
+    arrowCount--;
+    score -= 50;
+    scoreBox.textContent = `${score}`;
+    if (score > highscore) {
+      highscore = score;
+    }
+    highscoreBox.textContent = `${highscore}`;
   }
-  arrowCount--;
 }
